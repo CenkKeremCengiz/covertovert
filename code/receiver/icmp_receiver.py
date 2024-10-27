@@ -1,3 +1,11 @@
-import scapy
+from scapy.all import *
 
-# Implement your ICMP receiver here
+# Define a callback function to process each packet
+def icmp_packet_callback(packet):
+    if packet.haslayer(ICMP):
+        print("Received ICMP packet:")
+        packet.show()  # Display packet details
+
+# Start sniffing for ICMP packets
+print("Listening for ICMP packets...")
+sniff(filter="icmp", prn=icmp_packet_callback, timeout=10)
